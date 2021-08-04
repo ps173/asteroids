@@ -7,7 +7,6 @@ function love.load()
     arenaWidth = 1280
     arenaHeight = 720
     score = 0
-    gameIsOver = false
 
     shipRadius = 30
     shipX = arenaWidth / 2
@@ -78,7 +77,7 @@ function love.update(dt)
     local turnSpeed = 10
 
     if #asteroids == 0 then
-        gameIsOver = true
+        love.load()
     end
 
     local function areCirclesIntersecting(aX, aY, aRadius, bX, bY, bRadius)
@@ -94,7 +93,7 @@ function love.update(dt)
             * asteroidStages[asteroid.stage].speed * dt) % arenaHeight
 
        if areCirclesIntersecting( shipX, shipY, shipRadius, asteroid.x, asteroid.y, asteroidStages[asteroid.stage].radius ) then
-            gameIsOver = true
+            love.load()
             break
         end
     end
@@ -215,9 +214,6 @@ function love.draw()
         end
     end
 
-    if gameIsOver then
-        love.graphics.clear()
-    end
 end
 
 function love.keypressed(key,unicode)
